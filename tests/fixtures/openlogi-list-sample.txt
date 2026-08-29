@@ -1,0 +1,9 @@
+Bolt Receiver (046d:c548, vid=046d pid=c548)
+  ├─ slot 1 ● MX Master 3S (mouse, wpid=4082, battery=72% good)
+  └─ slot 2 ○ MX Keys Mini (keyboard, wpid=4087, battery=—)
+
+Cameras (1)
+  ├─ ● Brio 4K (camera, vid=046d pid=085e)
+
+Notes:
+  ○ = offline, ● = online

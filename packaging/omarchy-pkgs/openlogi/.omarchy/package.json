@@ -1,0 +1,5 @@
+{
+  "source": "local",
+  "release_ring": "edge",
+  "description": "OpenLogi — Logitech HID++ control. Repackages upstream release artifacts."
+}
