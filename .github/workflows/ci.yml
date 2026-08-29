@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest JSON
+        run: python3 -m json.tool manifest.json > /dev/null
+
+      - name: Python syntax
+        run: |
+          python3 -m py_compile status.py lib/openlogi_sync.py tests/test_status.py tests/test_plugin_layout.py
+
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck
+          shellcheck install.sh bin/omarchy-openlogi-sync hooks/theme-set-openlogi.sh
+
+      - name: Scripts executable
+        run: |
+          test -x bin/omarchy-openlogi-sync
+          test -x hooks/theme-set-openlogi.sh
+          test -x status.py
+
+      - name: PKGBUILD sanity
+        run: |
+          grep -q 'pkgver=0.7.4' packaging/omarchy-pkgs/openlogi/PKGBUILD
+          python3 -m json.tool packaging/omarchy-pkgs/openlogi/.omarchy/package.json > /dev/null

@@ -1,0 +1,45 @@
+# Maintainer: Shawn Yeager
+# Upstream: https://github.com/AprilNEA/OpenLogi
+#
+# Repackages the official OpenLogi release artifact for the Omarchy package
+# mirror. Copy this directory into omacom-io/omarchy-pkgs/pkgbuilds/edge/openlogi/
+# (or shared/ once promoted) and open a PR.
+
+pkgname=openlogi
+pkgver=0.7.4
+pkgrel=1
+pkgdesc='Logitech HID++ device control — remap buttons, DPI, and SmartShift'
+arch=('x86_64' 'aarch64')
+url='https://github.com/AprilNEA/OpenLogi'
+license=('Apache-2.0' 'MIT')
+depends=(
+  'dbus'
+  'fontconfig'
+  'gcc-libs'
+  'glibc'
+  'libglvnd'
+  'libxcb'
+  'libxkbcommon'
+  'libxkbcommon-x11'
+  'vulkan-icd-loader'
+  'wayland'
+)
+options=('!strip' '!debug')
+
+_arch_map_x86_64=amd64
+_arch_map_aarch64=arm64
+
+source_x86_64=(
+  "${pkgname}-v${pkgver}-linux-${_arch_map_x86_64}.pkg.tar.zst::${url}/releases/download/v${pkgver}/${pkgname}-v${pkgver}-linux-${_arch_map_x86_64}.pkg.tar.zst"
+)
+source_aarch64=(
+  "${pkgname}-v${pkgver}-linux-${_arch_map_aarch64}.pkg.tar.zst::${url}/releases/download/v${pkgver}/${pkgname}-v${pkgver}-linux-${_arch_map_aarch64}.pkg.tar.zst"
+)
+
+sha256sums_x86_64=('40785d2c006896bf3fad422c2d3a3f5830515df6923fe15c65805e4775a167c9')
+sha256sums_aarch64=('d9612bc4e910badca65242bb46b97a27f6922b7de53e89a641bce34af9654bc3')
+
+package() {
+  local artifact="${pkgname}-v${pkgver}-linux-${_arch_map_${CARCH}}.pkg.tar.zst"
+  bsdtar -xpf "${srcdir}/${artifact}" -C "${pkgdir}"
+}

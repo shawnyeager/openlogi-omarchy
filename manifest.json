@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "openlogi-omarchy",
+  "name": "OpenLogi",
+  "version": "0.3.0",
+  "author": "Shawn Yeager",
+  "license": "MIT",
+  "description": "OpenLogi agent status and launcher for Linux — configure devices in the OpenLogi app.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "OpenLogi",
+    "description": "Agent status, device telemetry, and quick launch. Remap buttons and DPI in OpenLogi.",
+    "category": "Devices",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 30
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 5,
+        "max": 3600,
+        "step": 5,
+        "defaultValue": 30
+      }
+    ]
+  }
+}

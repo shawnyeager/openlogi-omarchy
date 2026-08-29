@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SYNC="${XDG_DATA_HOME:-$HOME/.local/share}/omarchy-openlogi/openlogi_sync.py"
+
+if [[ -f "${ROOT}/lib/openlogi_sync.py" ]]; then
+  exec python3 "${ROOT}/lib/openlogi_sync.py" "$@"
+elif [[ -f "${SYNC}" ]]; then
+  exec python3 "${SYNC}" "$@"
+else
+  echo "openlogi_sync.py not found — run install.sh first" >&2
+  exit 1
+fi
